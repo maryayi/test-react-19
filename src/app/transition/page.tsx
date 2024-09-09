@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import AboutTab from './AboutTab';
 import ContactTab from './ContactTab';
 import PostsTab from './PostsTab';
@@ -8,11 +8,13 @@ import TabButton from './TabButton';
 
 export default function TabContainer() {
   const [tab, setTab] = useState('about');
+  const [isPending, startTransition] = useTransition();
 
   function selectTab(nextTab: 'about' | 'posts' | 'contact') {
-    setTab(nextTab);
+    startTransition(() => {
+      setTab(nextTab);
+    });
   }
-
   return (
     <>
       <div className="flex gap-2 p-2">
